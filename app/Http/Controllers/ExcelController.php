@@ -71,6 +71,18 @@ class ExcelController extends Controller
         $topmdLabels = array_keys(array_slice($mdActivity, 0, 3, true));
         $topmdData   = array_values(array_slice($mdActivity, 0, 3, true));
 
+        // Hitung jumlah sekolah per MD
+        $schoolPerMd = [];
+        foreach ($body as $row) {
+            $md = $row[1] ?? '—'; // kolom B = md_name
+            if (!isset($schoolPerMd[$md])) {
+                $schoolPerMd[$md] = 0;
+            }
+            $schoolPerMd[$md]++; // tambah 1 sekolah
+        }
+
+        $mdLabels = array_keys($schoolPerMd);
+        $mdSchoolCount = array_values($schoolPerMd);
 
         return view('dashboard', [
             'fileName' => $request->file('file')->getClientOriginalName(),
@@ -92,6 +104,8 @@ class ExcelController extends Controller
             'total_activity' => $total_activity,
             'topmdLabels' => $topmdLabels,
             'topmdData'   => $topmdData,
+            'mdLabels' => $mdLabels,
+            'mdSchoolCount' => $mdSchoolCount,  
         ]);
     }
 }

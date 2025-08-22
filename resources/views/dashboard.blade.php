@@ -63,29 +63,28 @@
     <div class="row mb-4">
         <div class="col-md-6">
             <div class="chart-box">
+                <h6 class="text-center fw-bold">TOP 3 SMK Teraktif</h6>
                 <canvas id="chart1"></canvas>
             </div>
         </div>
         <div class="col-md-6">
             <div class="chart-box">
+                <h6 class="text-center fw-bold">TOP 3 MD Teraktif</h6>
                 <canvas id="chart2"></canvas>
             </div>
         </div>
     </div>
 
     {{-- Chart Row 2 --}}
-    <div class="row">
-        <div class="col-md-6">
-            <div class="chart-box">
-                <canvas id="chart3"></canvas>
-            </div>
+   <div class="row">
+    <div class="chart-box">
+        <div class="text-center fw-bold mb-2" style="font-size:14px;">
+            Jumlah Sekolah per MD
         </div>
-        <div class="col-md-6">
-            <div class="chart-box">
-                <canvas id="chart4"></canvas>
-            </div>
-        </div>
+        <canvas id="chart3" class="w-100" style="max-height:400px;"></canvas>
     </div>
+</div>
+
 
     {{-- jQuery + DataTables + Chart.js --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -119,7 +118,7 @@ new Chart(document.getElementById('chart1').getContext('2d'), {
             x: {
                 ticks: {
                     font: {
-                        size: 9  // 👈 kecilin font label sumbu X
+                        size: 9
                     }
                 }
             }
@@ -138,6 +137,38 @@ new Chart(document.getElementById('chart2'), {
             data: @json(array_slice($topmdData, 0, 3)),
             backgroundColor: 'rgba(255, 99, 132, 0.7)'
         }]
+    }
+});
+
+// Chart 3: Jumlah sekolah per MD
+new Chart(document.getElementById('chart3').getContext('2d'), {
+    type: 'bar',
+    data: {
+        labels: @json($mdLabels),
+        datasets: [{
+            label: 'Jumlah Sekolah',
+            data: @json($mdSchoolCount),
+            backgroundColor: 'rgba(75, 192, 192, 0.7)'
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            x: {
+                ticks: {
+                    font: {
+                        size: 10
+                    }
+                }
+            },
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    stepSize: 1
+                }
+            }
+        }
     }
 });
 
