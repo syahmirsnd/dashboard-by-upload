@@ -104,10 +104,10 @@
 new Chart(document.getElementById('chart1'), {
     type: 'bar',
     data: {
-        labels: @json(array_slice($namaAnak, 0, 5)),
+        labels: @json(array_slice($namaAnak, 0, 3)),
         datasets: [{
             label: 'Total Aktivitas',
-            data: @json(array_slice($totalAktivitas, 0, 5)),
+            data: @json(array_slice($totalAktivitas, 0, 3)),
             backgroundColor: 'rgba(54, 162, 235, 0.7)'
         }]
     }
@@ -117,10 +117,10 @@ new Chart(document.getElementById('chart1'), {
 new Chart(document.getElementById('chart2'), {
     type: 'bar',
     data: {
-        labels: @json(array_slice($namaWali, 0, 5)),
+        labels: @json(array_slice($topWaliLabels, 0, 3)),
         datasets: [{
             label: 'Jumlah Aktivitas Murid',
-            data: @json(array_slice($totalAktivitas, 0, 5)),
+            data: @json(array_slice($topWaliData, 0, 3)),
             backgroundColor: 'rgba(255, 99, 132, 0.7)'
         }]
     }
