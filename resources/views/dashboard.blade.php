@@ -93,71 +93,55 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
-        // Init DataTables
-        $(document).ready(function() {
-            $('#excelTable').DataTable({
-                scrollX: true
-            });
-        });
+// Init DataTables
+$(document).ready(function() {
+    $('#excelTable').DataTable({
+        scrollX: true
+    });
+});
 
-        // Chart 1: Top 5 Murid
-new Chart(document.getElementById('chart1'), {
+        // Chart 1: Top 3 SMK
+// Chart 1: Top 3 SMK
+new Chart(document.getElementById('chart1').getContext('2d'), {
     type: 'bar',
     data: {
-        labels: @json(array_slice($namaAnak, 0, 3)),
+        labels: @json(array_slice($name, 0, 3)),
         datasets: [{
-            label: 'Total Aktivitas',
-            data: @json(array_slice($totalAktivitas, 0, 3)),
+            label: 'Total Aktivitas Murid SMK',
+            data: @json(array_slice($total_activity, 0, 3)),
             backgroundColor: 'rgba(54, 162, 235, 0.7)'
         }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        scales: {
+            x: {
+                ticks: {
+                    font: {
+                        size: 9  // 👈 kecilin font label sumbu X
+                    }
+                }
+            }
+        }
     }
 });
 
-// Chart 2: Top 5 Wali
+
+// Chart 2: Top 3 MD
 new Chart(document.getElementById('chart2'), {
     type: 'bar',
     data: {
-        labels: @json(array_slice($topWaliLabels, 0, 3)),
+        labels: @json(array_slice($topmdLabels, 0, 3)),
         datasets: [{
-            label: 'Jumlah Aktivitas Murid',
-            data: @json(array_slice($topWaliData, 0, 3)),
+            label: 'Jumlah Aktivitas SMK',
+            data: @json(array_slice($topmdData, 0, 3)),
             backgroundColor: 'rgba(255, 99, 132, 0.7)'
         }]
     }
 });
 
-// Chart 3: Line
-new Chart(document.getElementById('chart3'), {
-    type: 'line',
-    data: {
-        labels: @json(array_slice($namaAnak, 0, 10)),
-        datasets: [{
-            label: 'Jumlah Kegiatan',
-            data: @json(array_slice($jumlahKegiatan, 0, 10)),
-            borderColor: 'rgba(75, 192, 192, 1)',
-            fill: false
-        }]
-    }
-});
 
-// Chart 4: Pie
-new Chart(document.getElementById('chart4'), {
-    type: 'pie',
-    data: {
-        labels: @json(array_slice($namaWali, 0, 5)),
-        datasets: [{
-            label: 'Jumlah Kunjungan',
-            data: @json(array_slice($jumlahKunjungan, 0, 5)),
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.7)',
-                'rgba(54, 162, 235, 0.7)',
-                'rgba(255, 206, 86, 0.7)',
-                'rgba(75, 192, 192, 0.7)',
-                'rgba(153, 102, 255, 0.7)'
-            ]
-        }]
-    }
-});
     </script>
 
 </body>

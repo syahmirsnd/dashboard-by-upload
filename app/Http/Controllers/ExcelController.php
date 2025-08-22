@@ -23,51 +23,75 @@ class ExcelController extends Controller
             }
             $rows[] = $cells;
         }
-
+        
         // row pertama = header
         $headers = $rows[0] ?? [];
         $body = array_slice($rows, 1);
 
+        // pastikan tidak ada baris kosong tersisa di body
+        $body = array_values(array_filter($body, function($row) {
+            return isset($row[0]) && trim($row[0]) !== '';
+        }));
+
         //sort data berdasarkan kolom 'Total Aktivitas'
         usort($body, function ($a, $b) {
-            return ($b[4] ?? 0) <=> ($a[4] ?? 0);
+            return ($b[13] ?? 0) <=> ($a[13] ?? 0);
         });
 
         // ambil data kolom
-        $namaAnak = array_column($body, 0);  // kolom A
-        $namaWali = array_column($body, 1);  // kolom B
-        $jumlahKegiatan = array_column($body, 2);
-        $jumlahKunjungan = array_column($body, 3);
-        $totalAktivitas = array_column($body, 4);
+        $md_code = array_column($body, 0);  // kolom A
+        $md_name = array_column($body, 1);  // kolom B
+        $npsn = array_column($body, 2);
+        $name = array_column($body, 3);
+        $total_activity_update_data = array_column($body, 4);
+        $total_activity_download_document = array_column($body, 5);
+        $total_activity_verify_data = array_column($body, 6);
+        $total_activity_view_vacancy = array_column($body, 7);
+        $total_activity_apply_vacancy = array_column($body, 8);
+        $total_activity_view_article = array_column($body, 9);
+        $total_activity_create_ki = array_column($body, 10);
+        $total_activity_update_ki = array_column($body, 11);
+        $total_activity_view_ki = array_column($body, 12);
+        $total_activity = array_column($body, 13);
 
-        $waliAktivitas = [];
+        $mdActivity = [];
         foreach ($body as $row) {
-            $wali = $row[1] ?? '—';         // kolom B
-            $total = (float) ($row[4] ?? 0); // kolom E
+            $md = $row[1] ?? '—';          // kolom B
+            $total = (float) ($row[13] ?? 0);
 
-            if (!isset($waliAktivitas[$wali])) {
-                $waliAktivitas[$wali] = 0;
+            if (!isset($mdActivity[$md])) {
+                $mdActivity[$md] = 0;
             }
-            $waliAktivitas[$wali] += $total;
+            $mdActivity[$md] += $total;
         }
 
+
         // Urutkan dari yang tertinggi
-        arsort($waliAktivitas);
-        $topWaliLabels = array_keys(array_slice($waliAktivitas, 0, 3, true));
-        $topWaliData   = array_values(array_slice($waliAktivitas, 0, 3, true));
+        arsort($mdActivity);
+        $topmdLabels = array_keys(array_slice($mdActivity, 0, 3, true));
+        $topmdData   = array_values(array_slice($mdActivity, 0, 3, true));
 
 
         return view('dashboard', [
             'fileName' => $request->file('file')->getClientOriginalName(),
             'headers' => $headers,
             'body' => $body,
-            'namaAnak' => $namaAnak,
-            'namaWali' => $namaWali,
-            'jumlahKegiatan' => $jumlahKegiatan,
-            'jumlahKunjungan' => $jumlahKunjungan,
-            'totalAktivitas' => $totalAktivitas,
-            'topWaliLabels' => $topWaliLabels,
-            'topWaliData' => $topWaliData,
+            'md_code' => $md_code,
+            'md_name' => $md_name,
+            'npsn' => $npsn,
+            'name' => $name,
+            'total_activity_update_data' => $total_activity_update_data,
+            'total_activity_download_document' => $total_activity_download_document,
+            'total_activity_verify_data' => $total_activity_verify_data,
+            'total_activity_view_vacancy' => $total_activity_view_vacancy,
+            'total_activity_apply_vacancy' => $total_activity_apply_vacancy,
+            'total_activity_view_article' => $total_activity_view_article,
+            'total_activity_create_ki' => $total_activity_create_ki,
+            'total_activity_update_ki' => $total_activity_update_ki,
+            'total_activity_view_ki' => $total_activity_view_ki,
+            'total_activity' => $total_activity,
+            'topmdLabels' => $topmdLabels,
+            'topmdData'   => $topmdData,
         ]);
     }
 }
