@@ -12,22 +12,38 @@ class ExcelController extends Controller
             'file' => 'required|mimes:xlsx,xls,csv'
         ]);
 
-        // Load Excel
         $spreadsheet = IOFactory::load($request->file('file')->getRealPath());
         $sheet = $spreadsheet->getActiveSheet();
 
-        // Ambil semua data
-        $rows = $sheet->toArray(null, true, true, true);
+        $rows = [];
+        foreach ($sheet->getRowIterator() as $row) {
+            $cells = [];
+            foreach ($row->getCellIterator() as $cell) {
+                $cells[] = $cell->getCalculatedValue();
+            }
+            $rows[] = $cells;
+        }
 
-        // Buang header (row pertama)
+        // row pertama = header
+        $headers = $rows[0] ?? [];
         $body = array_slice($rows, 1);
 
-        // Kolom A = nama_anak, kolom E = total_aktivitas
-        $labels = array_column($body, 'A');  
-        $data   = array_column($body, 'E');  
+        // ambil data kolom
+        $namaAnak = array_column($body, 0);  // kolom A
+        $namaWali = array_column($body, 1);  // kolom B
+        $jumlahKegiatan = array_column($body, 2);
+        $jumlahKunjungan = array_column($body, 3);
+        $totalAktivitas = array_column($body, 4);
 
-        // Kirim ke view
-        return view('dashboard', compact('rows', 'labels', 'data'));
+        return view('dashboard', [
+            'fileName' => $request->file('file')->getClientOriginalName(),
+            'headers' => $headers,
+            'body' => $body,
+            'namaAnak' => $namaAnak,
+            'namaWali' => $namaWali,
+            'jumlahKegiatan' => $jumlahKegiatan,
+            'jumlahKunjungan' => $jumlahKunjungan,
+            'totalAktivitas' => $totalAktivitas
+        ]);
     }
 }
-
