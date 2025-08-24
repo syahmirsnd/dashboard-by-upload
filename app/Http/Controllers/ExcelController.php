@@ -24,11 +24,10 @@ class ExcelController extends Controller
             $rows[] = $cells;
         }
         
-        // row pertama = header
         $headers = $rows[0] ?? [];
         $body = array_slice($rows, 1);
 
-        // pastikan tidak ada baris kosong tersisa di body
+        // filter baris kosong
         $body = array_values(array_filter($body, function($row) {
             return isset($row[0]) && trim($row[0]) !== '';
         }));
@@ -39,8 +38,8 @@ class ExcelController extends Controller
         });
 
         // ambil data kolom
-        $md_code = array_column($body, 0);  // kolom A
-        $md_name = array_column($body, 1);  // kolom B
+        $md_code = array_column($body, 0);
+        $md_name = array_column($body, 1);
         $npsn = array_column($body, 2);
         $name = array_column($body, 3);
         $total_activity_update_data = array_column($body, 4);
@@ -56,7 +55,7 @@ class ExcelController extends Controller
 
         $mdActivity = [];
         foreach ($body as $row) {
-            $md = $row[1] ?? '—';          // kolom B
+            $md = $row[1] ?? '—';  
             $total = (float) ($row[13] ?? 0);
 
             if (!isset($mdActivity[$md])) {
@@ -74,11 +73,11 @@ class ExcelController extends Controller
         // Hitung jumlah sekolah per MD
         $schoolPerMd = [];
         foreach ($body as $row) {
-            $md = $row[1] ?? '—'; // kolom B = md_name
+            $md = $row[1] ?? '—'; 
             if (!isset($schoolPerMd[$md])) {
                 $schoolPerMd[$md] = 0;
             }
-            $schoolPerMd[$md]++; // tambah 1 sekolah
+            $schoolPerMd[$md]++;
         }
 
         $mdLabels = array_keys($schoolPerMd);

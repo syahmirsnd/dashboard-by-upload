@@ -20,7 +20,3 @@ Route::get('/', function () {
 
 
 Route::post('/upload', [ExcelController::class, 'upload'])->name('excel.upload');
-Route::get('/upload', [ExcelController::class, 'showUpload'])->name('excel.form');
-
-Route::get('/dashboard', [ExcelController::class, 'dashboard'])->name('excel.dashboard');
-

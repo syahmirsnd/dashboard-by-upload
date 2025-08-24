@@ -77,13 +77,13 @@
 
     {{-- Chart Row 2 --}}
    <div class="row">
-    <div class="chart-box">
-        <div class="text-center fw-bold mb-2" style="font-size:14px;">
-            Jumlah Sekolah per MD
+        <div class="chart-box">
+            <div class="text-center fw-bold mb-2" style="font-size:14px;">
+                Jumlah Sekolah per MD
+            </div>
+            <canvas id="chart3" class="w-100" style="max-height:400px;"></canvas>
         </div>
-        <canvas id="chart3" class="w-100" style="max-height:400px;"></canvas>
     </div>
-</div>
 
 
     {{-- jQuery + DataTables + Chart.js --}}
@@ -174,6 +174,5 @@ new Chart(document.getElementById('chart3').getContext('2d'), {
 
 
     </script>
-
 </body>
 </html>
