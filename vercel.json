@@ -22,8 +22,8 @@
     "env": {
         "APP_ENV": "production",
         "APP_DEBUG": "false",
-        "APP_URL": "https://yourproductionurl.com",
-        "APP_KEY": "base64:TGaVaXwhWgjn9akhE4SCSIjGG/cQqvICUQ+PgLA3Bs0=",
+        "APP_URL": "https://dashboard-by-upload-file.vercel.app",
+        "APP_KEY": "bbase64:7WsQ69NgwWaGaqSfv/+7KW5Q9gxT7vHmc6YXnVknqnw=",
         "APP_CONFIG_CACHE": "/tmp/config.php",
         "APP_EVENTS_CACHE": "/tmp/events.php",
         "APP_PACKAGES_CACHE": "/tmp/packages.php",
