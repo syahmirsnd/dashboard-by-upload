@@ -13,7 +13,7 @@
         },
         {
             "src": "/(.*)",
-            "dest": "/api/index.php"
+            "dest": "/views/upload.blade.php"
         }
     ],
     "public": true,
